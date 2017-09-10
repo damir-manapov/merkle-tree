@@ -1,0 +1,42 @@
+
+	Merkle tree
+
+		Links
+			https://gist.github.com/maaku/41b0054de0731321d23e9da90ba4ee0a
+
+		Hash funstions
+			SHA-2
+			CRC
+
+		Дочерние элементы перед хэшированием сортируются по алфавиту
+		При удалении, добавлении или измении (изменение изменит хэш, что может изменить порядок среди других хешей, что потребует пееремещения, а значит перестроения части дерева) перестраивается только часть дерева, лист, который затронут изменнием + по восходящей, плюс поддеревья справа от него
+		when computing leaf node hashes, a 0x00 byte is prepended to the hash data, while 0x01 is prepended when computing internal node hashes
+
+
+
+	Hasher
+		(from, to, hashFunction)
+
+	Service
+		Construct(levels, valueHasher) - фиксированное количество уровней
+		Construct(children, valueHasher) - фиксированное количество детей, возьмем это для начала с количеством детей 2
+		add(value)
+		delete(value)
+		update(valueFrom, valueTo)
+		getRootHash
+		getHashTree - without data
+		getTree
+		getSubHashTree - without data
+		getSubTree
+
+
+	MerkleTreeValidator
+		hashTreeValid(tree)
+		treeValid(tree)
+
+
+	Tests
+		Созадем, добавляем, запоминаем корень, добавляем еще значение, проверям что корень изменился
+		Удаляем, проверяем что изменился
+		Изменяем значение в ноде, проверяем что изменился
+		Вставка дубля не меняет корневого хеша
